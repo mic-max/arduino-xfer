@@ -12,7 +12,7 @@
 
 LiquidCrystal lcd(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
 
-char message[17];
+char message[16];
 volatile byte rx_byte;
 volatile int bit_position;
 volatile bool update_lcd;
@@ -47,6 +47,8 @@ void onClockPulse() {
 
   if (bit_position == 8) {
     strncat(message, (char*) &rx_byte, 1);
+    if (strlen(message) >= 16)
+      strcpy(message, message + 1);
   }
   update_lcd = true;
 }

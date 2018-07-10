@@ -1,4 +1,5 @@
 #include <LiquidCrystal.h>
+#include <Wire.h>
 
 // Transmit rate in bps
 #define TX_RATE 24
@@ -22,16 +23,28 @@ void setup() {
 
   // Initialize the LCD screen
   lcd.begin(16, 2);
-  sendASCII("Hi, I'm Michael.");
+  sendASCII("Hi, I'm Michael. How are you?");
+  uint16_t ham = hamming(65);
+}
+
+
+// receives a message with 11 least-significant bits containing the data
+uint16_t hamming(uint16_t message) {
+  // BIT # 0 1 2 3 4 5 6 7 8 9 a b c d e f
+  // DATA  1 0 0 0 0 0 1 1 0 1 1
+  // HAMM  x x x x x x x x x x x p p p p P
+  uint16_t result = 0;
+
+  return result;
 }
 
 void loop() {}
 
 void sendASCII(const char* message) {
-  lcd.setCursor(0, 0);
-  lcd.print(message);
 
   for (int i = 0; i < strlen(message); i++) {
+    lcd.setCursor(0, 0);
+    lcd.print(message[i]);
     byte tx_byte = message[i];
 
     lcd.noCursor();
